@@ -1,29 +1,35 @@
 /* =========================================================
    GripForce UF – style.css
-   Minimalistisk, ren, modern design. Ingen ramverk.
+   Djärv, mörk DTC-athletic-estetik. Ingen ramverk.
    ========================================================= */
 
 :root {
-  --color-bg: #FAFAFA;
-  --color-bg-alt: #F1F1F1;
-  --color-surface: #FFFFFF;
-  --color-text: #1A1A1A;
-  --color-text-muted: #6B6B6B;
-  /* --color-accent (#E8562A vs white) is ~3.6:1 – only WCAG AA-safe for
-     large/bold text (headings, big prices) or decorative graphics.
-     Use --color-accent-dark for small/normal-weight text and button
-     backgrounds, where it clears the 4.5:1 AA threshold. */
-  --color-accent: #E8562A;
-  --color-accent-dark: #CC451D;
-  --color-accent-darker: #B33D19;
-  --color-border: #E5E5E5;
+  --color-bg: #0D0D0D;
+  --color-bg-alt: #141414;
+  --color-surface: #171717;
+  --color-text: #F5F5F0;
+  --color-text-muted: #A3A3A3;
 
-  --radius-sm: 10px;
-  --radius-md: 16px;
-  --radius-lg: 24px;
+  /* Enda kontrastfärgen – används sparsamt (knappar, siffror, understrykningar).
+     Mot vår mörka bakgrund klarar den själv WCAG AA (≥4.5:1) för all
+     textstorlek, så ingen separat "mörk variant" behövs för läsbarhet.
+     --color-accent-bright är bara en hover-lyster, inte ett kontrastbehov. */
+  --color-accent: #E8562A;
+  --color-accent-bright: #FF7A4D;
+
+  /* Tunn orange avdelarlinje istället för hårda vita ramar. Dekorativ
+     (kortkonturer/dividers) – hålls medvetet subtil; det är textkontrast,
+     inte denna linje, som testas mot WCAG AA. */
+  --color-border: rgba(232, 86, 42, 0.4);
+
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 18px;
 
   --max-width: 1120px;
 
+  /* Anton: stort, kondenserat, versalt – bara H1/H2 och stat-siffror. */
+  --font-display: "Anton", "Poppins", sans-serif;
   --font-heading: "Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   --font-body: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 }
@@ -46,8 +52,14 @@ h1, h2, h3, h4 {
   font-family: var(--font-heading);
   font-weight: 700;
   line-height: 1.15;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.01em;
   margin: 0 0 0.5em;
+}
+h1, h2 {
+  font-family: var(--font-display);
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.01em;
 }
 p { margin: 0 0 1em; }
 button { font: inherit; cursor: pointer; }
@@ -57,11 +69,12 @@ button { font: inherit; cursor: pointer; }
   position: absolute;
   left: -999px;
   top: 0;
-  background: var(--color-accent-dark);
-  color: #fff;
+  background: var(--color-accent);
+  color: var(--color-bg);
   padding: 10px 16px;
   border-radius: 0 0 8px 0;
   z-index: 1000;
+  font-weight: 700;
 }
 .skip-link:focus { left: 0; }
 
@@ -80,9 +93,9 @@ button { font: inherit; cursor: pointer; }
   gap: 8px;
   min-height: 48px;
   padding: 12px 28px;
-  border-radius: 999px;
+  border-radius: var(--radius-sm);
   font-family: var(--font-heading);
-  font-weight: 600;
+  font-weight: 700;
   font-size: 1rem;
   border: 2px solid transparent;
   transition: background-color 0.15s ease, color 0.15s ease, transform 0.1s ease;
@@ -91,10 +104,20 @@ button { font: inherit; cursor: pointer; }
 .btn:active { transform: scale(0.97); }
 
 .btn-primary {
-  background: var(--color-accent-dark);
-  color: #fff;
+  background: var(--color-accent);
+  color: var(--color-bg);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
 }
-.btn-primary:hover { background: var(--color-accent-darker); }
+.btn-primary:hover { background: var(--color-accent-bright); }
+
+.btn-hero {
+  width: 100%;
+  min-height: 60px;
+  padding: 18px 32px;
+  font-size: 1.05rem;
+  border-radius: var(--radius-sm);
+}
 
 .btn-block { width: 100%; }
 
@@ -119,6 +142,7 @@ button { font: inherit; cursor: pointer; }
   font-weight: 800;
   font-size: 1.2rem;
   letter-spacing: -0.02em;
+  color: var(--color-text);
 }
 .logo span { color: var(--color-accent); }
 .logo small {
@@ -129,11 +153,14 @@ button { font: inherit; cursor: pointer; }
   vertical-align: super;
 }
 
-.header-cta { padding-inline: 22px; }
+.header-cta { padding-inline: 22px; min-height: 44px; }
 
 /* ---------- Hero ---------- */
 .hero {
-  padding: 56px 0 64px;
+  min-height: 80vh;
+  display: flex;
+  align-items: center;
+  padding: 96px 0 48px;
   background: var(--color-bg);
 }
 .hero-inner {
@@ -146,26 +173,30 @@ button { font: inherit; cursor: pointer; }
   letter-spacing: 0.08em;
   font-size: 0.8rem;
   font-weight: 700;
-  color: var(--color-accent-dark);
+  color: var(--color-accent);
   margin-bottom: 16px;
   font-family: var(--font-heading);
 }
 .hero-text h1 {
-  font-size: clamp(2.25rem, 7vw, 3.6rem);
+  font-size: clamp(2.75rem, 13vw, 5.5rem);
+  line-height: 0.98;
 }
 .hero-lead {
   color: var(--color-text-muted);
   font-size: 1.15rem;
-  max-width: 44ch;
+  max-width: 40ch;
+  margin-top: 20px;
 }
 .hero-actions {
   display: flex;
   flex-wrap: wrap;
   gap: 12px;
-  margin-top: 28px;
+  margin-top: 32px;
 }
 
-.hero-visual { display: flex; justify-content: center; }
+/* Den dekorativa illustrationen visas bara från desktop-brytpunkten –
+   på mobil ska rubriken/CTA:n äga utrymmet (70-80vh) utan konkurrens. */
+.hero-visual { display: none; }
 .strap-card {
   width: 100%;
   max-width: 320px;
@@ -179,12 +210,59 @@ button { font: inherit; cursor: pointer; }
 .strap-ring { fill: none; stroke: var(--color-accent); stroke-width: 6; }
 .strap-loop { fill: var(--color-accent); }
 
-/* ---------- Sections ---------- */
-.section { padding: 64px 0; scroll-margin-top: 88px; }
-.section-alt { background: var(--color-bg-alt); }
-.section-title {
-  font-size: clamp(1.75rem, 4.5vw, 2.4rem);
+/* ---------- Stat bar (snabb "bevis"-rad under hero) ---------- */
+.stat-bar {
+  background: #000;
+  padding: 28px 0;
+  position: relative;
+}
+.stat-bar-inner {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+.stat-bar-item {
+  text-align: center;
+  padding-inline: 4px;
+}
+.stat-bar-number {
+  display: block;
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(1.35rem, 6vw, 2.4rem);
   color: var(--color-accent);
+  letter-spacing: 0.01em;
+}
+.stat-bar-label {
+  display: block;
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--color-text-muted);
+  margin-top: 4px;
+}
+
+/* ---------- Sectioner & avdelarlinjer ---------- */
+.section { padding: 64px 0; scroll-margin-top: 88px; position: relative; }
+.section-alt { background: var(--color-bg-alt); }
+
+/* Tunn orange gradientlinje mellan sektioner istället för hårda ramar. */
+.section::before,
+.stat-bar::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(232, 86, 42, 0.7), transparent);
+}
+
+.section-title {
+  font-size: clamp(2rem, 5.5vw, 3rem);
+  color: var(--color-text);
 }
 .section-lead {
   color: var(--color-text-muted);
@@ -205,9 +283,15 @@ button { font: inherit; cursor: pointer; }
   border-radius: var(--radius-lg);
   padding: 24px;
   margin-bottom: 20px;
+  overflow: hidden;
+  transition: border-color 0.25s ease;
 }
+.product-image-frame:hover { border-color: var(--color-accent); }
+.product-illustration { transition: transform 0.3s ease; }
+.product-image-frame:hover .product-illustration { transform: scale(1.04); }
+
 .pi-bg { fill: var(--color-bg-alt); }
-.pi-strap { fill: none; stroke: var(--color-text); stroke-width: 8; stroke-linecap: round; transition: stroke 0.2s ease; }
+.pi-strap { fill: none; stroke: var(--color-text-muted); stroke-width: 8; stroke-linecap: round; transition: stroke 0.2s ease; }
 .pi-ring { fill: none; stroke: var(--color-accent); stroke-width: 5; }
 .pi-handle { fill: var(--color-accent); transition: fill 0.2s ease; }
 
@@ -215,9 +299,9 @@ button { font: inherit; cursor: pointer; }
    Byts illustrationen ut mot riktiga foton ersätts denna regel av att
    JS:en sätter rätt bildfil på en <img>. */
 .product-image-frame[data-color="Röd"] .pi-strap,
-.product-image-frame[data-color="Röd"] .pi-handle { stroke: #C62828; fill: #C62828; }
+.product-image-frame[data-color="Röd"] .pi-handle { stroke: #E8542A; fill: #E8542A; }
 .product-image-frame[data-color="Blå"] .pi-strap,
-.product-image-frame[data-color="Blå"] .pi-handle { stroke: #2955A8; fill: #2955A8; }
+.product-image-frame[data-color="Blå"] .pi-handle { stroke: #3E6FD9; fill: #3E6FD9; }
 
 .color-swatches {
   display: flex;
@@ -228,14 +312,14 @@ button { font: inherit; cursor: pointer; }
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  border: 2px solid var(--color-border);
-  background-color: var(--color-text);
+  border: 2px solid var(--color-text-muted);
+  background-color: #2A2A2A;
   padding: 0;
   position: relative;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
 }
-.swatch[data-color="Svart"] { background-color: #1A1A1A; }
-.swatch[data-color="Röd"] { background-color: #C62828; }
-.swatch[data-color="Blå"] { background-color: #2955A8; }
+.swatch[data-color="Röd"] { background-color: #E8542A; }
+.swatch[data-color="Blå"] { background-color: #3E6FD9; }
 .swatch.is-active {
   border-color: var(--color-accent);
   box-shadow: 0 0 0 2px var(--color-bg), 0 0 0 4px var(--color-accent);
@@ -271,7 +355,7 @@ button { font: inherit; cursor: pointer; }
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.04em;
-  color: var(--color-accent-dark);
+  color: var(--color-accent);
   margin-bottom: 6px;
 }
 .price-amount {
@@ -341,15 +425,15 @@ button { font: inherit; cursor: pointer; }
   display: flex;
   align-items: center;
   justify-content: center;
-  background: var(--color-text);
-  color: #fff;
+  background: var(--color-accent);
+  color: var(--color-bg);
   border-radius: 50%;
   font-family: var(--font-heading);
   font-weight: 700;
 }
 .steps h3 { font-size: 1.1rem; margin-bottom: 4px; }
 .steps p { color: var(--color-text-muted); margin: 0; }
-.steps a { color: var(--color-accent-dark); font-weight: 600; text-decoration: underline; }
+.steps a { color: var(--color-accent); font-weight: 600; text-decoration: underline; }
 
 .copy-row {
   display: flex;
@@ -363,31 +447,41 @@ button { font: inherit; cursor: pointer; }
   align-items: center;
   min-height: 40px;
   padding: 8px 18px;
-  border-radius: 999px;
+  border-radius: var(--radius-sm);
   border: 1px solid var(--color-border);
-  background: var(--color-surface);
+  background: transparent;
   color: var(--color-text);
   font-family: var(--font-heading);
   font-weight: 600;
   font-size: 0.88rem;
   transition: border-color 0.15s ease, color 0.15s ease;
 }
-.btn-copy:hover { border-color: var(--color-accent-dark); color: var(--color-accent-dark); }
+.btn-copy:hover { border-color: var(--color-accent); color: var(--color-accent); }
 .copy-confirm {
   font-size: 0.86rem;
   font-weight: 600;
-  color: #2E7D32;
+  color: #5FCF7A;
   min-height: 1.2em;
 }
 
 /* ---------- Footer ---------- */
 .site-footer {
-  background: var(--color-text);
-  color: #F1F1F1;
+  background: #000;
+  color: var(--color-text);
   padding-top: 48px;
+  position: relative;
 }
-.footer-logo { color: #fff; }
-.footer-logo small { color: #B0B0B0; }
+.site-footer::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(232, 86, 42, 0.7), transparent);
+}
+.footer-logo { color: var(--color-text); }
+.footer-logo small { color: var(--color-text-muted); }
 .footer-inner-simple {
   display: flex;
   flex-direction: column;
@@ -400,15 +494,15 @@ button { font: inherit; cursor: pointer; }
   gap: 20px;
   flex-wrap: wrap;
 }
-.footer-links a { color: #F1F1F1; font-weight: 500; }
+.footer-links a { color: var(--color-text); font-weight: 500; }
 .footer-links a:hover { color: var(--color-accent); }
 .footer-bottom {
-  border-top: 1px solid rgba(255, 255, 255, 0.12);
+  border-top: 1px solid var(--color-border);
   padding: 20px 24px;
   font-size: 0.84rem;
   text-align: center;
 }
-.footer-bottom p { margin: 0; color: #9A9A9A; }
+.footer-bottom p { margin: 0; color: var(--color-text-muted); }
 
 /* ---------- Scroll to top ---------- */
 .scroll-top {
@@ -418,16 +512,18 @@ button { font: inherit; cursor: pointer; }
   width: 48px;
   height: 48px;
   border-radius: 50%;
-  border: 1px solid var(--color-border);
-  background: var(--color-text);
-  color: #fff;
+  border: none;
+  background: var(--color-accent);
+  color: var(--color-bg);
   font-size: 1.2rem;
+  font-weight: 700;
   opacity: 0;
   visibility: hidden;
   transform: translateY(10px);
-  transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s;
+  transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s, background-color 0.15s ease;
   z-index: 400;
 }
+.scroll-top:hover { background: var(--color-accent-bright); }
 .scroll-top.is-visible {
   opacity: 1;
   visibility: visible;
@@ -458,14 +554,22 @@ button { font: inherit; cursor: pointer; }
    Breakpoints – mobile-first (min-width upward)
    ========================================================= */
 
+/* Tablet ≥ 640px */
+@media (min-width: 640px) {
+  .btn-hero { width: auto; }
+}
+
 /* Desktop ≥ 860px */
 @media (min-width: 860px) {
+  .hero { min-height: 640px; padding: 72px 0; }
   .hero-inner {
     flex-direction: row;
     align-items: center;
   }
   .hero-text { flex: 1 1 55%; }
-  .hero-visual { flex: 1 1 45%; }
+  .hero-visual { display: flex; justify-content: center; flex: 1 1 45%; }
+
+  .stat-bar-inner { gap: 24px; }
 
   .product-grid { grid-template-columns: 1fr 1fr; align-items: start; }
 
@@ -483,6 +587,5 @@ button { font: inherit; cursor: pointer; }
 
 /* Large desktop ≥ 1120px */
 @media (min-width: 1120px) {
-  .hero { padding: 88px 0 96px; }
   .section { padding: 96px 0; }
 }
