@@ -4,114 +4,36 @@
 (function () {
   "use strict";
 
-  var PRICE_PER_PAIR = 199;
-
   document.addEventListener("DOMContentLoaded", function () {
-    initAccordion();
-    initOrderForm();
+    initColorSwatches();
     initScrollTop();
     initRevealOnScroll();
     initYear();
   });
 
-  /* ---------------- FAQ accordion ---------------- */
-  function initAccordion() {
-    var triggers = document.querySelectorAll(".accordion-trigger");
+  /* ---------------- Färgval ---------------- */
+  function initColorSwatches() {
+    var swatches = document.querySelectorAll(".swatch");
+    var frame = document.getElementById("productImageFrame");
+    var label = document.getElementById("selectedColorLabel");
+    if (!swatches.length || !frame) return;
 
-    triggers.forEach(function (trigger) {
-      var panel = trigger.nextElementSibling;
-      panel.style.maxHeight = "0px";
+    swatches.forEach(function (swatch) {
+      swatch.addEventListener("click", function () {
+        var color = swatch.getAttribute("data-color");
 
-      trigger.addEventListener("click", function () {
-        var isOpen = trigger.getAttribute("aria-expanded") === "true";
-
-        // Close all
-        triggers.forEach(function (t) {
-          t.setAttribute("aria-expanded", "false");
-          t.nextElementSibling.style.maxHeight = "0px";
+        swatches.forEach(function (s) {
+          s.classList.remove("is-active");
+          s.setAttribute("aria-pressed", "false");
         });
+        swatch.classList.add("is-active");
+        swatch.setAttribute("aria-pressed", "true");
 
-        // Open the clicked one, unless it was already open
-        if (!isOpen) {
-          trigger.setAttribute("aria-expanded", "true");
-          panel.style.maxHeight = panel.scrollHeight + "px";
-        }
+        // Byt "huvudbilden". Med riktiga produktfoton: ersätt raden nedan
+        // med att sätta <img>-elementets src till rätt fil för färgen.
+        frame.setAttribute("data-color", color);
+        if (label) label.textContent = color;
       });
-    });
-  }
-
-  /* ---------------- Order form ---------------- */
-  function initOrderForm() {
-    var form = document.getElementById("orderForm");
-    if (!form) return;
-
-    var quantityInput = document.getElementById("quantity");
-    var totalEl = document.getElementById("orderTotal");
-    var statusEl = document.getElementById("formStatus");
-
-    function updateTotal() {
-      var qty = parseInt(quantityInput.value, 10);
-      if (isNaN(qty) || qty < 1) qty = 1;
-      var total = qty * PRICE_PER_PAIR;
-      totalEl.textContent = total.toLocaleString("sv-SE") + " kr";
-    }
-
-    quantityInput.addEventListener("input", updateTotal);
-    updateTotal();
-
-    form.addEventListener("submit", function (e) {
-      e.preventDefault();
-      statusEl.className = "form-status";
-      statusEl.textContent = "";
-
-      var valid = true;
-      var name = document.getElementById("name");
-      var email = document.getElementById("email");
-      var quantity = document.getElementById("quantity");
-
-      var nameError = document.getElementById("nameError");
-      var emailError = document.getElementById("emailError");
-      var quantityError = document.getElementById("quantityError");
-
-      nameError.textContent = "";
-      emailError.textContent = "";
-      quantityError.textContent = "";
-
-      if (!name.value.trim()) {
-        nameError.textContent = "Ange ditt namn.";
-        valid = false;
-      }
-
-      var emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      if (!emailPattern.test(email.value.trim())) {
-        emailError.textContent = "Ange en giltig e-postadress.";
-        valid = false;
-      }
-
-      var qtyValue = parseInt(quantity.value, 10);
-      if (isNaN(qtyValue) || qtyValue < 1 || qtyValue > 20) {
-        quantityError.textContent = "Ange ett antal mellan 1 och 20.";
-        valid = false;
-      }
-
-      if (!valid) {
-        statusEl.textContent = "Kontrollera fälten markerade ovan.";
-        statusEl.className = "form-status error";
-        return;
-      }
-
-      // Ingen backend i detta projekt – vi bekräftar lokalt.
-      var qty = qtyValue;
-      var total = (qty * PRICE_PER_PAIR).toLocaleString("sv-SE");
-
-      statusEl.textContent =
-        "Tack, " + name.value.trim() + "! Din beställning på " + qty +
-        " par (" + total + " kr) är mottagen. Vi hör av oss till " +
-        email.value.trim() + " inom kort.";
-      statusEl.className = "form-status success";
-
-      form.reset();
-      updateTotal();
     });
   }
 
@@ -139,7 +61,7 @@
   /* ---------------- Reveal-on-scroll ---------------- */
   function initRevealOnScroll() {
     var targets = document.querySelectorAll(
-      ".feature-card, .product-grid, .steps li, .about-grid, .strap-card"
+      ".product-grid, .sustain-grid, .steps li, .strap-card"
     );
 
     if (!("IntersectionObserver" in window) || targets.length === 0) {

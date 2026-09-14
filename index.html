@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>GripForce UF – Gym Straps med D-Handle</title>
-  <meta name="description" content="GripForce UF säljer träningsremmar med metall-D-ring för starkare grepp och tyngre lyft. Beställ dina Gym Straps idag.">
+  <meta name="description" content="Gym Straps med D-Handle från GripForce UF. Gjorda av återvunnet Econyl®-material, testade till 240 kg. Beställ via Instagram och Swish.">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💪</text></svg>">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -24,26 +24,16 @@
 
   <main id="main">
 
-    <!-- HERO -->
+    <!-- 1. HERO -->
     <section class="hero">
       <div class="container hero-inner">
         <div class="hero-text">
           <p class="eyebrow">UF-företag &middot; Styrketräning</p>
-          <h1>Greppet som <span class="accent">håller</span><br>när du ger järnet.</h1>
-          <p class="hero-lead">
-            Gym Straps med D-Handle från GripForce UF. Ett par träningsremmar
-            med kraftig metall-D-ring som avlastar greppet så du kan
-            fokusera på musklerna som räknas – inte på att tappa stången.
-          </p>
+          <h1>Gym Straps med <span class="accent">D-Handle</span></h1>
+          <p class="hero-lead">Gjorda av återvunnet material. Testade till 240 kg.</p>
           <div class="hero-actions">
-            <a href="#bestall" class="btn btn-primary">Beställ nu – 199 kr</a>
-            <a href="#produkt" class="btn btn-outline">Se produkten</a>
+            <a href="#bestall" class="btn btn-primary">Beställ nu</a>
           </div>
-          <ul class="hero-badges">
-            <li>🚚 Skickas inom 2–4 dagar</li>
-            <li>🎓 Drivs av gymnasieelever</li>
-            <li>🔩 Förstärkt D-ring i stål</li>
-          </ul>
         </div>
 
         <div class="hero-visual" aria-hidden="true">
@@ -62,245 +52,155 @@
       </div>
     </section>
 
-    <!-- PRODUKT -->
+    <!-- 2. PRODUKT -->
     <section class="section" id="produkt">
       <div class="container">
         <h2 class="section-title">Produkten</h2>
-        <p class="section-lead">Byggd för marklyft, rodd, latsdrag och shrugs – allt som kräver ett grepp som inte ger vika.</p>
+        <p class="section-lead">Ett par träningsremmar med kraftig metall-D-ring som avlastar greppet så du kan fokusera på musklerna som räknas.</p>
 
         <div class="product-grid">
-          <div class="product-visual">
-            <svg viewBox="0 0 300 200" class="product-illustration" aria-hidden="true">
-              <rect x="10" y="10" width="280" height="180" rx="18" class="pi-bg"/>
-              <path d="M90 40 C70 90 70 130 90 170" class="pi-strap"/>
-              <path d="M210 40 C230 90 230 130 210 170" class="pi-strap"/>
-              <circle cx="90" cy="40" r="14" class="pi-ring"/>
-              <circle cx="210" cy="40" r="14" class="pi-ring"/>
-              <rect x="75" y="150" width="30" height="34" rx="6" class="pi-handle"/>
-              <rect x="195" y="150" width="30" height="34" rx="6" class="pi-handle"/>
-            </svg>
+          <div class="product-gallery">
+            <!--
+              TODO – produktbilder:
+              Byt ut illustrationen nedan mot riktiga produktfoton per färg,
+              t.ex. <img src="images/product-svart.jpg" alt="Gym Straps i svart">.
+              Låt varje färgcirkel sätta rätt bildkälla i script.js
+              (se funktionen initColorSwatches).
+            -->
+            <div class="product-image-frame" id="productImageFrame" data-color="Svart">
+              <svg viewBox="0 0 300 200" class="product-illustration" aria-hidden="true">
+                <rect x="10" y="10" width="280" height="180" rx="18" class="pi-bg"/>
+                <path d="M90 40 C70 90 70 130 90 170" class="pi-strap"/>
+                <path d="M210 40 C230 90 230 130 210 170" class="pi-strap"/>
+                <circle cx="90" cy="40" r="14" class="pi-ring"/>
+                <circle cx="210" cy="40" r="14" class="pi-ring"/>
+                <rect x="75" y="150" width="30" height="34" rx="6" class="pi-handle"/>
+                <rect x="195" y="150" width="30" height="34" rx="6" class="pi-handle"/>
+              </svg>
+            </div>
+
+            <div class="color-swatches" role="group" aria-label="Välj färg">
+              <button type="button" class="swatch is-active" data-color="Svart" aria-label="Svart" aria-pressed="true"></button>
+              <button type="button" class="swatch" data-color="Röd" aria-label="Röd" aria-pressed="false"></button>
+              <button type="button" class="swatch" data-color="Blå" aria-label="Blå" aria-pressed="false"></button>
+            </div>
+            <p class="selected-color">Vald färg: <strong id="selectedColorLabel">Svart</strong></p>
           </div>
 
           <div class="product-details">
             <h3>Gym Straps med D-Handle</h3>
-            <p class="price">199 kr <span>/ par</span></p>
+            <p>Justerbara träningsremmar i kraftig väv med rostfri D-ring och neopren-fodrat handtag. Byggda för marklyft, rodd, latsdrag och shrugs – allt som kräver ett grepp som inte ger vika.</p>
 
-            <ul class="spec-list">
-              <li><strong>Material:</strong> Kraftig polyesterväv, sömförstärkt</li>
-              <li><strong>D-ring:</strong> Rostfritt stål, testad för tunga lyft</li>
-              <li><strong>Handtag:</strong> Neopren-fodrat för mjukt men stadigt grepp</li>
-              <li><strong>Längd:</strong> Justerbar, passar de flesta handleder</li>
-              <li><strong>Färger:</strong> Svart, Röd, Blå</li>
-              <li><strong>Vikt:</strong> ~140 g / par</li>
-            </ul>
+            <div class="price-box">
+              <div class="price-option">
+                <span class="price-amount">199 kr</span>
+                <span class="price-label">/ par</span>
+              </div>
+              <div class="price-option price-option-bundle">
+                <span class="price-badge">Paketpris</span>
+                <span class="price-amount">349 kr</span>
+                <span class="price-label">för 2 par</span>
+              </div>
+            </div>
 
-            <a href="#bestall" class="btn btn-primary">Lägg i beställning</a>
+            <a href="#bestall" class="btn btn-primary">Beställ nu</a>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- FÖRDELAR -->
-    <section class="section section-alt" id="fordelar">
+    <!-- 3. HÅLLBARHET -->
+    <section class="section section-alt" id="hallbarhet">
       <div class="container">
-        <h2 class="section-title">Varför Gym Straps?</h2>
-        <p class="section-lead">När greppet sviker slutar setet – långt innan musklerna är klara. Våra straps löser det.</p>
+        <h2 class="section-title">Inte bara starkt – rätt gjort</h2>
+        <p class="section-lead">Vi har valt bort billigt jungfrunylon. Så här är banden i våra Gym Straps faktiskt gjorda.</p>
 
-        <div class="feature-grid">
-          <article class="feature-card">
-            <div class="feature-icon">💪</div>
-            <h3>Starkare grepp</h3>
-            <p>D-handlen ger dig full kontroll så du orkar fler reps med tyngre vikt.</p>
-          </article>
-          <article class="feature-card">
-            <div class="feature-icon">🖐️</div>
-            <h3>Skonar händerna</h3>
-            <p>Neoprenfodringen minskar skav och belastning på handflator och fingrar.</p>
-          </article>
-          <article class="feature-card">
-            <div class="feature-icon">⚡</div>
-            <h3>Snabb på/av</h3>
-            <p>D-handle-designen gör att du snabbt kan koppla loss mellan övningar.</p>
-          </article>
-          <article class="feature-card">
-            <div class="feature-icon">🧵</div>
-            <h3>Byggda för att hålla</h3>
-            <p>Förstärkta sömmar och stål-D-ring klarar tunga marklyft och rodd.</p>
-          </article>
+        <div class="sustain-grid">
+          <div class="sustain-text">
+            <p>
+              Bandet är tillverkat av <strong>Econyl®</strong> – ett garn som är
+              100&nbsp;% regenererad nylon. Råvaran kommer från uttjänta
+              fiskenät, gamla mattor och textilrester som samlas in och
+              återvinns istället för att bli avfall eller hamna i havet.
+            </p>
+            <p>
+              Vävningen och sömnaden sker hos en underleverantör i
+              <strong>Tyskland</strong>, inom EU – kort transportkedja och
+              samma kvalitetskrav som gäller för all professionell
+              lyftutrustning.
+            </p>
+            <p>
+              Varje par är dragprovat till en <strong>brotthållfasthet på
+              240&nbsp;kg</strong>, långt över vad som krävs vid tunga
+              marklyft och rodd. Det är siffrorna – inte löften – som ligger
+              bakom att vi vågar kalla dem hållbara.
+            </p>
+          </div>
+
+          <div class="sustain-stats">
+            <div class="stat"><strong>100%</strong><span>Econyl®-återvunnen nylon</span></div>
+            <div class="stat"><strong>DE / EU</strong><span>Tillverkat i Tyskland</span></div>
+            <div class="stat"><strong>240 kg</strong><span>Testad brotthållfasthet</span></div>
+          </div>
         </div>
       </div>
     </section>
 
-    <!-- SÅ FUNKAR DET -->
-    <section class="section" id="saanvander">
+    <!-- 4. SÅ FUNKAR DET -->
+    <section class="section" id="bestall">
       <div class="container">
-        <h2 class="section-title">Så använder du dem</h2>
+        <h2 class="section-title">Så funkar det</h2>
+        <p class="section-lead">Vi har ingen vanlig kassa – så här beställer du dina Gym Straps i tre steg.</p>
 
         <ol class="steps">
           <li>
             <span class="step-number">1</span>
-            <h3>Trä handen genom loopen</h3>
-            <p>Stoppa handleden genom den vadderade loopen med D-ringen mot handflatan.</p>
+            <h3>DM:a oss på Instagram</h3>
+            <p>Skicka ett meddelande till <a href="https://instagram.com/gripforceuf" target="_blank" rel="noopener noreferrer">@gripforceuf</a> med vilken färg (Svart, Röd eller Blå) och hur många par du vill ha.</p>
           </li>
           <li>
             <span class="step-number">2</span>
-            <h3>Linda remmen runt stången</h3>
-            <p>Linda den fria delen av remmen ett varv runt skivstången eller stången.</p>
+            <h3>Swisha</h3>
+            <!-- TODO: Byt ut Swish-numret nedan mot företagets riktiga nummer -->
+            <p>Swisha <strong>199 kr</strong> för 1 par eller <strong>349 kr</strong> för 2 par till <strong>123 456 78 90</strong>. Skriv ditt namn i meddelandefältet.</p>
           </li>
           <li>
             <span class="step-number">3</span>
-            <h3>Greppa och lyft</h3>
-            <p>Ta tag i D-handlen tillsammans med stången – nu bär remmen greppet åt dig.</p>
+            <h3>Vi levererar</h3>
+            <p>Du får dina Gym Straps inom <strong>2–4 dagar</strong> – vi lämnar över dem på skolan eller skickar hem till dig.</p>
           </li>
         </ol>
+
+        <a href="https://instagram.com/gripforceuf" target="_blank" rel="noopener noreferrer" class="btn btn-primary">DM:a oss på Instagram</a>
       </div>
     </section>
 
-    <!-- OM OSS -->
+    <!-- 5. OM OSS -->
     <section class="section section-alt" id="omoss">
-      <div class="container about-grid">
-        <div>
-          <h2 class="section-title">Om GripForce UF</h2>
-          <p>
-            Vi är ett UF-företag som drivs av gymnasieelever med ett gemensamt
-            träningsintresse. Vi såg hur många i vår ålder slutar sina set för
-            tidigt – inte för att musklerna är slut, utan för att greppet ger
-            vika. Så vi utvecklade Gym Straps med D-Handle: enkla, hållbara
-            och prisvärda, gjorda av unga för unga som tränar.
-          </p>
-          <ul class="about-list">
-            <li>🏫 Ung Företagsamhet-projekt</li>
-            <li>🇸🇪 Designat och testat i Sverige</li>
-            <li>♻️ Fokus på hållbara material</li>
-          </ul>
-        </div>
-        <div class="about-stats">
-          <div class="stat"><strong>15–20</strong><span>Åldersgrupp vi riktar oss till</span></div>
-          <div class="stat"><strong>2–4</strong><span>Dagars leveranstid</span></div>
-          <div class="stat"><strong>100%</strong><span>Elevdrivet UF-företag</span></div>
-        </div>
-      </div>
-    </section>
-
-    <!-- BESTÄLL -->
-    <section class="section" id="bestall">
       <div class="container">
-        <h2 class="section-title">Beställ dina Gym Straps</h2>
-        <p class="section-lead">Fyll i formuläret så återkommer vi med bekräftelse och betalningsinfo via mejl.</p>
-
-        <form class="order-form" id="orderForm" novalidate>
-          <div class="form-row">
-            <div class="form-group">
-              <label for="name">Namn</label>
-              <input type="text" id="name" name="name" required autocomplete="name">
-              <span class="error-msg" id="nameError"></span>
-            </div>
-            <div class="form-group">
-              <label for="email">E-post</label>
-              <input type="email" id="email" name="email" required autocomplete="email">
-              <span class="error-msg" id="emailError"></span>
-            </div>
-          </div>
-
-          <div class="form-row">
-            <div class="form-group">
-              <label for="color">Färg</label>
-              <select id="color" name="color">
-                <option value="Svart">Svart</option>
-                <option value="Röd">Röd</option>
-                <option value="Blå">Blå</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label for="quantity">Antal par</label>
-              <input type="number" id="quantity" name="quantity" min="1" max="20" value="1" required>
-              <span class="error-msg" id="quantityError"></span>
-            </div>
-          </div>
-
-          <div class="form-group">
-            <label for="message">Meddelande (valfritt)</label>
-            <textarea id="message" name="message" rows="3" placeholder="T.ex. leveransadress eller frågor"></textarea>
-          </div>
-
-          <div class="order-summary">
-            <span>Totalt att betala</span>
-            <strong id="orderTotal">199 kr</strong>
-          </div>
-
-          <button type="submit" class="btn btn-primary btn-block">Skicka beställning</button>
-
-          <p class="form-status" id="formStatus" role="status" aria-live="polite"></p>
-        </form>
-      </div>
-    </section>
-
-    <!-- FAQ -->
-    <section class="section section-alt" id="faq">
-      <div class="container">
-        <h2 class="section-title">Vanliga frågor</h2>
-
-        <div class="accordion" id="accordion">
-          <div class="accordion-item">
-            <button class="accordion-trigger" aria-expanded="false">
-              Passar Gym Straps alla handledsstorlekar?
-            </button>
-            <div class="accordion-panel">
-              <p>Ja, remmarna är justerbara och passar de flesta ungdomar och vuxna, från cirka 13 år och uppåt.</p>
-            </div>
-          </div>
-          <div class="accordion-item">
-            <button class="accordion-trigger" aria-expanded="false">
-              Vilka övningar funkar de till?
-            </button>
-            <div class="accordion-panel">
-              <p>Marklyft, rodd, latsdrag, shrugs och andra dragövningar där greppet annars begränsar dig.</p>
-            </div>
-          </div>
-          <div class="accordion-item">
-            <button class="accordion-trigger" aria-expanded="false">
-              Hur betalar jag?
-            </button>
-            <div class="accordion-panel">
-              <p>Efter din beställning mejlar vi dig betalningsinfo (Swish eller banköverföring) inom 1–2 dagar.</p>
-            </div>
-          </div>
-          <div class="accordion-item">
-            <button class="accordion-trigger" aria-expanded="false">
-              Kan jag ångra min beställning?
-            </button>
-            <div class="accordion-panel">
-              <p>Absolut, kontakta oss inom 14 dagar via mejl så löser vi det enligt distansköplagen.</p>
-            </div>
-          </div>
-        </div>
+        <h2 class="section-title">Om oss</h2>
+        <p class="section-lead">
+          GripForce UF är ett UF-företag som drivs av fyra gymnasieelever med
+          ett gemensamt gymintresse. Vi såg hur ofta greppet ger vika långt
+          innan musklerna är slut – så vi utvecklade egna Gym Straps med
+          D-Handle: enkla, hållbara och prisvärda, gjorda av unga som tränar
+          för andra som tränar.
+        </p>
       </div>
     </section>
 
   </main>
 
   <footer class="site-footer" id="kontakt">
-    <div class="container footer-inner">
-      <div>
-        <a href="#top" class="logo footer-logo">Grip<span>Force</span> <small>UF</small></a>
-        <p>Ett UF-företag som gör styrketräning lite starkare.</p>
-      </div>
-
-      <div class="footer-col">
-        <h4>Kontakt</h4>
-        <p><a href="mailto:info@gripforceuf.se">info@gripforceuf.se</a></p>
-        <p><a href="https://instagram.com" target="_blank" rel="noopener noreferrer">@gripforceuf</a></p>
-      </div>
-
-      <div class="footer-col">
-        <h4>Länkar</h4>
-        <p><a href="#produkt">Produkten</a></p>
-        <p><a href="#bestall">Beställ</a></p>
-        <p><a href="#faq">FAQ</a></p>
+    <div class="container footer-inner-simple">
+      <a href="#top" class="logo footer-logo">Grip<span>Force</span> <small>UF</small></a>
+      <div class="footer-links">
+        <a href="https://instagram.com/gripforceuf" target="_blank" rel="noopener noreferrer">Instagram</a>
+        <a href="mailto:info@gripforceuf.se">info@gripforceuf.se</a>
       </div>
     </div>
     <div class="container footer-bottom">
-      <p>&copy; <span id="year"></span> GripForce UF. Drivs inom ramen för Ung Företagsamhet.</p>
+      <p>&copy; <span id="year"></span> GripForce UF</p>
     </div>
   </footer>
 
