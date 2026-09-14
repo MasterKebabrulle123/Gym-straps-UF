@@ -5,11 +5,29 @@
   "use strict";
 
   document.addEventListener("DOMContentLoaded", function () {
+    initSmoothScroll();
     initColorSwatches();
+    initCopySwishNumber();
     initScrollTop();
     initRevealOnScroll();
     initYear();
   });
+
+  /* ---------------- Mjuk scroll för interna länkar ---------------- */
+  function initSmoothScroll() {
+    document.querySelectorAll('a[href^="#"]').forEach(function (link) {
+      link.addEventListener("click", function (e) {
+        var id = link.getAttribute("href");
+        if (!id || id.length < 2) return;
+
+        var target = document.querySelector(id);
+        if (!target) return;
+
+        e.preventDefault();
+        target.scrollIntoView({ behavior: "smooth", block: "start" });
+      });
+    });
+  }
 
   /* ---------------- Färgval ---------------- */
   function initColorSwatches() {
@@ -35,6 +53,53 @@
         if (label) label.textContent = color;
       });
     });
+  }
+
+  /* ---------------- Kopiera Swish-nummer ---------------- */
+  function initCopySwishNumber() {
+    var btn = document.getElementById("copySwishBtn");
+    var confirm = document.getElementById("copyConfirm");
+    if (!btn) return;
+
+    var resetTimer;
+
+    btn.addEventListener("click", function () {
+      var number = btn.getAttribute("data-swish-number") || "";
+      copyText(number).then(function (ok) {
+        if (!confirm) return;
+        confirm.textContent = ok ? "Kopierat!" : "Kunde inte kopiera";
+
+        clearTimeout(resetTimer);
+        resetTimer = setTimeout(function () {
+          confirm.textContent = "";
+        }, 2000);
+      });
+    });
+  }
+
+  function copyText(text) {
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      return navigator.clipboard.writeText(text).then(
+        function () { return true; },
+        function () { return false; }
+      );
+    }
+
+    // Fallback för äldre webbläsare / icke-säkra kontexter.
+    try {
+      var textarea = document.createElement("textarea");
+      textarea.value = text;
+      textarea.style.position = "fixed";
+      textarea.style.opacity = "0";
+      document.body.appendChild(textarea);
+      textarea.focus();
+      textarea.select();
+      var ok = document.execCommand("copy");
+      document.body.removeChild(textarea);
+      return Promise.resolve(ok);
+    } catch (err) {
+      return Promise.resolve(false);
+    }
   }
 
   /* ---------------- Scroll-to-top button ---------------- */

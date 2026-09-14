@@ -162,7 +162,13 @@
             <span class="step-number">2</span>
             <h3>Swisha</h3>
             <!-- TODO: Byt ut Swish-numret nedan mot företagets riktiga nummer -->
-            <p>Swisha <strong>199 kr</strong> för 1 par eller <strong>349 kr</strong> för 2 par till <strong>123 456 78 90</strong>. Skriv ditt namn i meddelandefältet.</p>
+            <p>Swisha <strong>199 kr</strong> för 1 par eller <strong>349 kr</strong> för 2 par till <strong id="swishNumber">123 456 78 90</strong>. Skriv ditt namn i meddelandefältet.</p>
+            <div class="copy-row">
+              <button type="button" class="btn-copy" id="copySwishBtn" data-swish-number="123 456 78 90">
+                Kopiera Swish-nummer
+              </button>
+              <span class="copy-confirm" id="copyConfirm" role="status" aria-live="polite"></span>
+            </div>
           </li>
           <li>
             <span class="step-number">3</span>
