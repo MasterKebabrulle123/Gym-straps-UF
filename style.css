@@ -185,12 +185,20 @@ button { font: inherit; cursor: pointer; }
    garanterat ska vara minst dubbelt så brett som även en bred
    skrivbordsvy (~1920-2560px) – annars syns tomma glapp under loopen.
    Loopen flyttar täcket exakt en åttondel (12,5 %) av sin egen bredd
-   = exakt en kopias bredd, för en sömlös övergång. */
+   = exakt en kopias bredd, för en sömlös övergång.
+
+   Hastigheten är i FASTA PIXLAR per sekund (en kopias bredd delat på
+   animation-duration), inte relativ till skärmens bredd. På en smal
+   mobilskärm hinner texten då korsa hela synliga ytan på en bråkdel av
+   tiden det tar på en bred desktop-vy, vilket upplevs som mycket
+   snabbare även om pixelhastigheten är identisk. Mobilt får därför en
+   längre (långsammare) duration som standard; brytpunkten för desktop
+   nedan (≥860px) växlar tillbaka till den piggare farten. */
 .marquee-track {
   display: flex;
   gap: 24px;
   width: max-content;
-  animation: marquee-scroll 11s linear infinite;
+  animation: marquee-scroll 22s linear infinite;
 }
 /* Pausa på hover/fokus – både för musanvändare och tangentbordsnavigering. */
 .marquee:hover .marquee-track,
@@ -739,6 +747,10 @@ button { font: inherit; cursor: pointer; }
 
 /* Desktop ≥ 860px */
 @media (min-width: 860px) {
+  /* Snabbare (kortare duration = fler px/s) än mobilens standard –
+     motiverat ovan vid .marquee-track. */
+  .marquee-track { animation-duration: 11s; }
+
   .hero { min-height: 640px; padding: 72px 0; }
   .hero-inner {
     flex-direction: row;
