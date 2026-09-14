@@ -9,8 +9,13 @@
   --color-surface: #FFFFFF;
   --color-text: #1A1A1A;
   --color-text-muted: #6B6B6B;
+  /* --color-accent (#E8562A vs white) is ~3.6:1 – only WCAG AA-safe for
+     large/bold text (headings, big prices) or decorative graphics.
+     Use --color-accent-dark for small/normal-weight text and button
+     backgrounds, where it clears the 4.5:1 AA threshold. */
   --color-accent: #E8562A;
   --color-accent-dark: #CC451D;
+  --color-accent-darker: #B33D19;
   --color-border: #E5E5E5;
 
   --radius-sm: 10px;
@@ -52,7 +57,7 @@ button { font: inherit; cursor: pointer; }
   position: absolute;
   left: -999px;
   top: 0;
-  background: var(--color-accent);
+  background: var(--color-accent-dark);
   color: #fff;
   padding: 10px 16px;
   border-radius: 0 0 8px 0;
@@ -86,10 +91,10 @@ button { font: inherit; cursor: pointer; }
 .btn:active { transform: scale(0.97); }
 
 .btn-primary {
-  background: var(--color-accent);
+  background: var(--color-accent-dark);
   color: #fff;
 }
-.btn-primary:hover { background: var(--color-accent-dark); }
+.btn-primary:hover { background: var(--color-accent-darker); }
 
 .btn-block { width: 100%; }
 
@@ -117,7 +122,7 @@ button { font: inherit; cursor: pointer; }
 }
 .logo span { color: var(--color-accent); }
 .logo small {
-  font-weight: 500;
+  font-weight: 600;
   font-size: 0.6em;
   color: var(--color-text-muted);
   margin-left: 2px;
@@ -141,7 +146,7 @@ button { font: inherit; cursor: pointer; }
   letter-spacing: 0.08em;
   font-size: 0.8rem;
   font-weight: 700;
-  color: var(--color-accent);
+  color: var(--color-accent-dark);
   margin-bottom: 16px;
   font-family: var(--font-heading);
 }
@@ -266,7 +271,7 @@ button { font: inherit; cursor: pointer; }
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.04em;
-  color: var(--color-accent);
+  color: var(--color-accent-dark);
   margin-bottom: 6px;
 }
 .price-amount {
@@ -344,7 +349,7 @@ button { font: inherit; cursor: pointer; }
 }
 .steps h3 { font-size: 1.1rem; margin-bottom: 4px; }
 .steps p { color: var(--color-text-muted); margin: 0; }
-.steps a { color: var(--color-accent); font-weight: 600; text-decoration: underline; }
+.steps a { color: var(--color-accent-dark); font-weight: 600; text-decoration: underline; }
 
 .copy-row {
   display: flex;
@@ -367,7 +372,7 @@ button { font: inherit; cursor: pointer; }
   font-size: 0.88rem;
   transition: border-color 0.15s ease, color 0.15s ease;
 }
-.btn-copy:hover { border-color: var(--color-accent); color: var(--color-accent); }
+.btn-copy:hover { border-color: var(--color-accent-dark); color: var(--color-accent-dark); }
 .copy-confirm {
   font-size: 0.86rem;
   font-weight: 600;
