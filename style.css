@@ -178,10 +178,19 @@ button { font: inherit; cursor: pointer; }
   border-bottom: 1px solid var(--color-border);
   padding-block: 8px;
 }
+/* Åtta identiska kopior (en riktig + sju aria-hidden) läggs sida vid
+   sida med samma gap-värde på både täcket och varje kopia, så
+   avståndet är exakt lika stort överallt – inom en kopia och mellan
+   kopior. En kopia är bara ~550px bred, så åtta behövs för att täcket
+   garanterat ska vara minst dubbelt så brett som även en bred
+   skrivbordsvy (~1920-2560px) – annars syns tomma glapp under loopen.
+   Loopen flyttar täcket exakt en åttondel (12,5 %) av sin egen bredd
+   = exakt en kopias bredd, för en sömlös övergång. */
 .marquee-track {
   display: flex;
+  gap: 24px;
   width: max-content;
-  animation: marquee-scroll 22s linear infinite;
+  animation: marquee-scroll 11s linear infinite;
 }
 /* Pausa på hover/fokus – både för musanvändare och tangentbordsnavigering. */
 .marquee:hover .marquee-track,
@@ -192,8 +201,7 @@ button { font: inherit; cursor: pointer; }
   display: flex;
   align-items: center;
   flex-shrink: 0;
-  gap: 20px;
-  padding-inline-end: 20px;
+  gap: 24px;
 }
 .marquee-group span {
   font-family: var(--font-heading);
@@ -208,7 +216,7 @@ button { font: inherit; cursor: pointer; }
 
 @keyframes marquee-scroll {
   from { transform: translateX(0); }
-  to { transform: translateX(-50%); }
+  to { transform: translateX(-12.5%); }
 }
 
 @media (prefers-reduced-motion: reduce) {
