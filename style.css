@@ -14,21 +14,24 @@
   --color-text: #F5F5F0;
   --color-text-muted: #A3A3A3;
 
-  /* Enda kontrastfärgen, delad av båda teman – används sparsamt (knappar,
-     siffror, understrykningar). Mot vår mörka bakgrund klarar den själv
-     WCAG AA (≥4.5:1) för all textstorlek. Mot ljus bakgrund landar den
-     runt ~3.6:1, vilket bara räcker för stor/fet text (≥18.66px fet,
-     AA-gränsen 3:1) – se kommentaren i [data-theme="light"] nedan för hur
-     vi hanterar det för knappar/siffror utan att byta färg.
-     --color-accent-bright är bara en hover-lyster, inte ett kontrastbehov.
+  /* Enda kontrastfärgen, delad av båda teman (röd, inte orange) – används
+     sparsamt (knappar, siffror, understrykningar). Mot VÅR LJUSA bakgrund
+     klarar den WCAG AA (≥4.5:1) för all textstorlek. Mot mörk bakgrund
+     landar den istället runt ~3.5:1, vilket bara räcker för stor/fet text
+     (≥18.66px fet, AA-gränsen 3:1) – se kommentaren i :root ovan/nedan om
+     vilka knappar/sifferbadges som redan är satta i den storleken, och
+     kommentaren i [data-theme="light"] för vilka små etiketter som ändå
+     hamnar under 4.5:1 i mörkt läge.
+     --color-accent-bright är bara en hover-lyster, inte ett kontrastbehov –
+     ljusare på mörk botten, mörkare på ljus botten (se light-blocket).
      --color-accent-rgb speglar samma färg som R,G,B-tal för rgba()-bruk
      (avdelarlinjer, kortkonturer) – uppdatera båda tillsammans. */
-  --color-accent: #E8562A;
-  --color-accent-rgb: 232, 86, 42;
-  --color-accent-bright: #FF7A4D;
+  --color-accent: #C62828;
+  --color-accent-rgb: 198, 40, 40;
+  --color-accent-bright: #D15353;
   --color-success: #5FCF7A;
 
-  /* Tunn orange avdelarlinje istället för hårda vita ramar. Dekorativ
+  /* Tunn röd avdelarlinje istället för hårda vita ramar. Dekorativ
      (kortkonturer/dividers) – hålls medvetet subtil; det är textkontrast,
      inte denna linje, som testas mot WCAG AA. */
   --color-border: rgba(var(--color-accent-rgb), 0.4);
@@ -46,19 +49,20 @@
 }
 
 /* Ljust tema – bara bakgrund/text byts; --color-accent ärvs oförändrad
-   (samma orange i båda teman). --color-accent-bright är fortfarande en
-   ren hover-lyster, men mörkare istället för ljusare eftersom knappar
-   redan sitter på en ljus sida här.
+   (samma röd i båda teman, mot vit bakgrund klarar den AA överallt).
+   --color-accent-bright är fortfarande bara en hover-lyster, men mörkare
+   istället för ljusare eftersom knappar redan sitter på en ljus botten
+   här.
 
-   KÄND AVVIKELSE: accent-mot-vitt landar ~3.6:1, under AA:s 4.5:1-krav
-   för normal text. Knappar/sifferbadges (.btn, .step-number, .skip-link)
-   är därför satta till ≥18.66px fet stil nedan så de formellt räknas som
-   "stor text" (AA-gräns 3:1, som 3.6 klarar) utan att byta färg. Några
-   verkligt SMÅ etiketter (.eyebrow, .price-badge, .steps a, hover-texten
-   på .btn-copy) kan inte förstoras utan att se fel ut i sin roll och
-   ligger kvar under 4.5:1 i ljust läge – ett medvetet märkesval, inte en
-   miss. Byt till en mörkare orange bara för just dessa om det behöver
-   rättas till fullo. */
+   Motsvarande KÄNDA AVVIKELSE finns istället kvar i det MÖRKA temat
+   (:root ovan): samma röd mot vår mörka bakgrund landar bara ~3.5:1.
+   Knappar/sifferbadges (.btn, .step-number, .skip-link) är satta till
+   ≥18.66px fet stil så de formellt räknas som "stor text" (AA-gräns 3:1,
+   som 3.5 klarar) i båda teman utan att byta färg. Några verkligt SMÅ
+   etiketter (.eyebrow, .price-badge, .steps a, hover-texten på
+   .btn-copy) kan inte förstoras utan att se fel ut i sin roll – de
+   klarar sig fint här i ljust läge men hamnar under 4.5:1 i mörkt läge.
+   Ett medvetet märkesval, inte en miss. */
 [data-theme="light"] {
   --color-bg: #FAFAFA;
   --color-bg-alt: #F1F1F1;
@@ -67,7 +71,7 @@
   --color-text: #1A1A1A;
   --color-text-muted: #6B6B6B;
 
-  --color-accent-bright: #CC451D;
+  --color-accent-bright: #A31515;
   --color-success: #2E7D32;
 }
 
@@ -137,13 +141,14 @@ button { font: inherit; cursor: pointer; }
   font-family: var(--font-heading);
   font-weight: 700;
   /* 19.2px + fet = "stor text" i WCAG:s mening (gräns 18.66px), så
-     accentens ~3.6:1 mot ljus bakgrund klarar AA:s 3:1 istället för de
-     4.5:1 som annars krävs för text i den här storleken. */
+     accentens ~3.5:1 (mot vår mörkaste bakgrund) klarar AA:s 3:1 istället
+     för de 4.5:1 som annars krävs för text i den här storleken. */
   font-size: 1.2rem;
   border: 2px solid transparent;
-  transition: background-color 0.15s ease, color 0.15s ease, transform 0.1s ease;
+  transition: background-color 0.15s ease, color 0.15s ease, transform 0.2s ease;
   white-space: nowrap;
 }
+.btn:hover { transform: scale(1.04); }
 .btn:active { transform: scale(0.97); }
 
 .btn-primary {
@@ -165,6 +170,50 @@ button { font: inherit; cursor: pointer; }
 }
 
 .btn-block { width: 100%; }
+
+/* ---------- Marquee (löpande banderoll ovanför headern) ---------- */
+.marquee {
+  overflow: hidden;
+  background: var(--color-bg-deep);
+  border-bottom: 1px solid var(--color-border);
+  padding-block: 8px;
+}
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee-scroll 22s linear infinite;
+}
+/* Pausa på hover/fokus – både för musanvändare och tangentbordsnavigering. */
+.marquee:hover .marquee-track,
+.marquee:focus-within .marquee-track {
+  animation-play-state: paused;
+}
+.marquee-group {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  gap: 20px;
+  padding-inline-end: 20px;
+}
+.marquee-group span {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-text);
+  white-space: nowrap;
+}
+.marquee-group .marquee-sep { color: var(--color-accent); }
+
+@keyframes marquee-scroll {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track { animation: none; }
+}
 
 /* ---------- Header ---------- */
 .site-header {
@@ -319,7 +368,7 @@ button { font: inherit; cursor: pointer; }
 .section { padding: 64px 0; scroll-margin-top: 88px; position: relative; }
 .section-alt { background: var(--color-bg-alt); }
 
-/* Tunn orange gradientlinje mellan sektioner istället för hårda ramar. */
+/* Tunn röd gradientlinje mellan sektioner istället för hårda ramar. */
 .section::before,
 .stat-bar::before {
   content: "";
@@ -355,9 +404,12 @@ button { font: inherit; cursor: pointer; }
   padding: 24px;
   margin-bottom: 20px;
   overflow: hidden;
-  transition: border-color 0.25s ease;
+  transition: border-color 0.25s ease, transform 0.25s ease;
 }
-.product-image-frame:hover { border-color: var(--color-accent); }
+.product-image-frame:hover {
+  border-color: var(--color-accent);
+  transform: scale(1.02);
+}
 .product-illustration { transition: transform 0.3s ease; }
 .product-image-frame:hover .product-illustration { transform: scale(1.04); }
 
