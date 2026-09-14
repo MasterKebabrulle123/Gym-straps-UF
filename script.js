@@ -7,49 +7,12 @@
   var PRICE_PER_PAIR = 199;
 
   document.addEventListener("DOMContentLoaded", function () {
-    initMobileNav();
     initAccordion();
     initOrderForm();
     initScrollTop();
     initRevealOnScroll();
     initYear();
   });
-
-  /* ---------------- Mobile navigation ---------------- */
-  function initMobileNav() {
-    var toggle = document.getElementById("navToggle");
-    var nav = document.getElementById("primaryNav");
-    if (!toggle || !nav) return;
-
-    function closeNav() {
-      toggle.setAttribute("aria-expanded", "false");
-      nav.classList.remove("is-open");
-      document.body.style.overflow = "";
-    }
-
-    function openNav() {
-      toggle.setAttribute("aria-expanded", "true");
-      nav.classList.add("is-open");
-      document.body.style.overflow = "hidden";
-    }
-
-    toggle.addEventListener("click", function () {
-      var isOpen = toggle.getAttribute("aria-expanded") === "true";
-      isOpen ? closeNav() : openNav();
-    });
-
-    nav.querySelectorAll("a").forEach(function (link) {
-      link.addEventListener("click", closeNav);
-    });
-
-    document.addEventListener("keydown", function (e) {
-      if (e.key === "Escape") closeNav();
-    });
-
-    window.addEventListener("resize", function () {
-      if (window.innerWidth >= 860) closeNav();
-    });
-  }
 
   /* ---------------- FAQ accordion ---------------- */
   function initAccordion() {
