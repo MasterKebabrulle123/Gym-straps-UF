@@ -353,6 +353,8 @@ button { font: inherit; cursor: pointer; }
   color: var(--color-accent);
   letter-spacing: 0.01em;
 }
+/* Jämnbreda siffror så räknar-animationen inte hoppar i bredd. */
+.count-up { font-variant-numeric: tabular-nums; }
 .stat-bar-label {
   display: block;
   font-family: var(--font-heading);
@@ -557,7 +559,7 @@ button { font: inherit; cursor: pointer; }
 }
 .steps h3 { font-size: 1.1rem; margin-bottom: 4px; }
 .steps p { color: var(--color-text-muted); margin: 0; }
-.steps a { color: var(--color-accent); font-weight: 600; text-decoration: underline; }
+.steps a { color: var(--color-accent); font-weight: 600; }
 
 .copy-row {
   display: flex;
@@ -620,6 +622,28 @@ button { font: inherit; cursor: pointer; }
 }
 .footer-links a { color: var(--color-text); font-weight: 500; }
 .footer-links a:hover { color: var(--color-accent); }
+
+/* Understrykning som växer in vid hover, istället för en statisk linje. */
+.footer-links a,
+.steps a {
+  position: relative;
+  text-decoration: none;
+  background-image: linear-gradient(currentColor, currentColor);
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+  background-size: 0% 1px;
+  transition: background-size 0.25s ease, color 0.15s ease;
+}
+.footer-links a:hover,
+.steps a:hover {
+  background-size: 100% 1px;
+}
+@media (prefers-reduced-motion: reduce) {
+  .footer-links a,
+  .steps a {
+    transition: color 0.15s ease;
+  }
+}
 .footer-bottom {
   border-top: 1px solid var(--color-border);
   padding: 20px 24px;
@@ -627,6 +651,23 @@ button { font: inherit; cursor: pointer; }
   text-align: center;
 }
 .footer-bottom p { margin: 0; color: var(--color-text-muted); }
+
+/* ---------- Flytande "Beställ nu" (syns efter att hero scrollats förbi) ---------- */
+.floating-cta {
+  position: fixed;
+  left: 16px;
+  bottom: 16px;
+  z-index: 400;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(10px);
+  transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s;
+}
+.floating-cta.is-visible {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
 
 /* ---------- Scroll to top ---------- */
 .scroll-top {
@@ -671,6 +712,11 @@ button { font: inherit; cursor: pointer; }
     opacity: 1;
     transform: none;
     transition: none;
+  }
+  .floating-cta,
+  .floating-cta.is-visible {
+    transform: none;
+    transition: opacity 0.15s ease, visibility 0.15s;
   }
 }
 

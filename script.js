@@ -10,6 +10,8 @@
     initColorSwatches();
     initCopySwishNumber();
     initScrollTop();
+    initFloatingCta();
+    initCountUp();
     initRevealOnScroll();
     initYear();
   });
@@ -160,6 +162,81 @@
     btn.addEventListener("click", function () {
       window.scrollTo({ top: 0, behavior: "smooth" });
     });
+  }
+
+  /* ---------------- Flytande "Beställ nu" ----------------
+     Syns när hero-sektionen scrollats ur vy, döljs igen om man scrollar
+     tillbaka upp till den. */
+  function initFloatingCta() {
+    var cta = document.getElementById("floatingCta");
+    var hero = document.querySelector(".hero");
+    if (!cta || !hero || !("IntersectionObserver" in window)) return;
+
+    var observer = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (entry) {
+          cta.classList.toggle("is-visible", !entry.isIntersecting);
+        });
+      },
+      { threshold: 0 }
+    );
+
+    observer.observe(hero);
+  }
+
+  /* ---------------- Räkna upp stat-bar-siffror ----------------
+     Animerar 0 → målvärde när siffran scrollas in i vy. Den riktiga
+     siffran ligger redan i HTML:en (progressiv förbättring) – vi
+     nollställer den bara om vi faktiskt tänker animera den. */
+  function initCountUp() {
+    var counters = document.querySelectorAll(".count-up");
+    if (!counters.length) return;
+
+    var prefersReducedMotion =
+      window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    if (!("IntersectionObserver" in window) || prefersReducedMotion) return;
+
+    counters.forEach(function (el) {
+      el.textContent = "0";
+    });
+
+    var observer = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (entry) {
+          if (!entry.isIntersecting) return;
+          animateCountUp(entry.target);
+          observer.unobserve(entry.target);
+        });
+      },
+      { threshold: 0.6 }
+    );
+
+    counters.forEach(function (el) { observer.observe(el); });
+  }
+
+  function animateCountUp(el) {
+    var target = parseInt(el.getAttribute("data-count-to"), 10);
+    if (isNaN(target)) return;
+
+    var duration = 1200;
+    var startTime = null;
+
+    function step(timestamp) {
+      if (startTime === null) startTime = timestamp;
+      var progress = Math.min((timestamp - startTime) / duration, 1);
+      var eased = 1 - Math.pow(1 - progress, 3); // easeOutCubic
+
+      el.textContent = Math.round(eased * target);
+
+      if (progress < 1) {
+        requestAnimationFrame(step);
+      } else {
+        el.textContent = target;
+      }
+    }
+
+    requestAnimationFrame(step);
   }
 
   /* ---------------- Reveal-on-scroll ---------------- */
