@@ -6,6 +6,22 @@
   <title>GripForce UF – Gym Straps med D-Handle</title>
   <meta name="description" content="Gym Straps med D-Handle från GripForce UF. Gjorda av återvunnet Econyl®-material, testade till 240 kg. Beställ via Instagram och Swish.">
 
+  <!-- Sätter sparat/föredraget tema innan sidan målas upp, så det aldrig
+       blinkar till fel tema (FOUC). Måste köras synkront här i <head> –
+       CSS:ens standard (inget data-theme) är redan mörkt tema, så vi
+       behöver bara agera när resultatet blir ljust. -->
+  <script>
+    (function () {
+      try {
+        var saved = localStorage.getItem("theme");
+        var wantsLight = saved
+          ? saved === "light"
+          : window.matchMedia("(prefers-color-scheme: light)").matches;
+        if (wantsLight) document.documentElement.setAttribute("data-theme", "light");
+      } catch (e) {}
+    })();
+  </script>
+
   <!-- Favicon: enkel platshållare, se favicon.svg – byt ut mot riktig logotyp -->
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link rel="alternate icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💪</text></svg>">
@@ -43,7 +59,18 @@
   <header class="site-header" id="top">
     <div class="container header-inner">
       <a href="#top" class="logo">Grip<span>Force</span> <small>UF</small></a>
-      <a href="#bestall" class="btn btn-primary header-cta">Beställ nu</a>
+      <div class="header-actions">
+        <button type="button" class="theme-toggle" id="themeToggle" aria-pressed="false" aria-label="Växla mellan mörkt och ljust tema">
+          <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="4"/>
+            <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/>
+          </svg>
+          <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79Z"/>
+          </svg>
+        </button>
+        <a href="#bestall" class="btn btn-primary header-cta">Beställ nu</a>
+      </div>
     </div>
   </header>
 

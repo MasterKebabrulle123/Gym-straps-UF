@@ -5,6 +5,7 @@
   "use strict";
 
   document.addEventListener("DOMContentLoaded", function () {
+    initThemeToggle();
     initSmoothScroll();
     initColorSwatches();
     initCopySwishNumber();
@@ -12,6 +13,44 @@
     initRevealOnScroll();
     initYear();
   });
+
+  /* ---------------- Ljust/mörkt tema ----------------
+     Det initiala valet (sparat värde, annars prefers-color-scheme)
+     sätts redan synkront i <head> innan sidan målas upp – se den
+     inline-scripttaggen i index.html. Här kopplar vi bara på
+     klick-hanteringen och håller aria-pressed uppdaterad. */
+  function initThemeToggle() {
+    var toggle = document.getElementById("themeToggle");
+    if (!toggle) return;
+
+    var root = document.documentElement;
+
+    function isLight() {
+      return root.getAttribute("data-theme") === "light";
+    }
+
+    function syncAria() {
+      toggle.setAttribute("aria-pressed", String(isLight()));
+    }
+
+    syncAria();
+
+    toggle.addEventListener("click", function () {
+      var nextTheme = isLight() ? "dark" : "light";
+
+      if (nextTheme === "light") {
+        root.setAttribute("data-theme", "light");
+      } else {
+        root.removeAttribute("data-theme");
+      }
+
+      try {
+        localStorage.setItem("theme", nextTheme);
+      } catch (e) {}
+
+      syncAria();
+    });
+  }
 
   /* ---------------- Mjuk scroll för interna länkar ---------------- */
   function initSmoothScroll() {
