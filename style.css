@@ -1,0 +1,781 @@
+/* =========================================================
+   GripForce UF – style.css
+   Djärv, mörk DTC-athletic-estetik. Ingen ramverk.
+   ========================================================= */
+
+:root {
+  /* Mörkt tema (standard). --color-bg-deep är den "renaste" tonen i temat
+     (helsvart här) – används för stat-bar/footer som ett extra djup-lager
+     ovanpå --color-bg. */
+  --color-bg: #0D0D0D;
+  --color-bg-alt: #141414;
+  --color-surface: #171717;
+  --color-bg-deep: #000000;
+  --color-text: #F5F5F0;
+  --color-text-muted: #A3A3A3;
+
+  /* Enda kontrastfärgen, delad av båda teman (röd, inte orange) – används
+     sparsamt (knappar, siffror, understrykningar). Mot VÅR LJUSA bakgrund
+     klarar den WCAG AA (≥4.5:1) för all textstorlek. Mot mörk bakgrund
+     landar den istället runt ~3.5:1, vilket bara räcker för stor/fet text
+     (≥18.66px fet, AA-gränsen 3:1) – se kommentaren i :root ovan/nedan om
+     vilka knappar/sifferbadges som redan är satta i den storleken, och
+     kommentaren i [data-theme="light"] för vilka små etiketter som ändå
+     hamnar under 4.5:1 i mörkt läge.
+     --color-accent-bright är bara en hover-lyster, inte ett kontrastbehov –
+     ljusare på mörk botten, mörkare på ljus botten (se light-blocket).
+     --color-accent-rgb speglar samma färg som R,G,B-tal för rgba()-bruk
+     (avdelarlinjer, kortkonturer) – uppdatera båda tillsammans. */
+  --color-accent: #C62828;
+  --color-accent-rgb: 198, 40, 40;
+  --color-accent-bright: #D15353;
+  --color-success: #5FCF7A;
+
+  /* Tunn röd avdelarlinje istället för hårda vita ramar. Dekorativ
+     (kortkonturer/dividers) – hålls medvetet subtil; det är textkontrast,
+     inte denna linje, som testas mot WCAG AA. */
+  --color-border: rgba(var(--color-accent-rgb), 0.4);
+
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 18px;
+
+  --max-width: 1120px;
+
+  /* Anton: stort, kondenserat, versalt – bara H1/H2 och stat-siffror. */
+  --font-display: "Anton", "Poppins", sans-serif;
+  --font-heading: "Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-body: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+/* Ljust tema – bara bakgrund/text byts; --color-accent ärvs oförändrad
+   (samma röd i båda teman, mot vit bakgrund klarar den AA överallt).
+   --color-accent-bright är fortfarande bara en hover-lyster, men mörkare
+   istället för ljusare eftersom knappar redan sitter på en ljus botten
+   här.
+
+   Motsvarande KÄNDA AVVIKELSE finns istället kvar i det MÖRKA temat
+   (:root ovan): samma röd mot vår mörka bakgrund landar bara ~3.5:1.
+   Knappar/sifferbadges (.btn, .step-number, .skip-link) är satta till
+   ≥18.66px fet stil så de formellt räknas som "stor text" (AA-gräns 3:1,
+   som 3.5 klarar) i båda teman utan att byta färg. Några verkligt SMÅ
+   etiketter (.eyebrow, .price-badge, .steps a, hover-texten på
+   .btn-copy) kan inte förstoras utan att se fel ut i sin roll – de
+   klarar sig fint här i ljust läge men hamnar under 4.5:1 i mörkt läge.
+   Ett medvetet märkesval, inte en miss. */
+[data-theme="light"] {
+  --color-bg: #FAFAFA;
+  --color-bg-alt: #F1F1F1;
+  --color-surface: #FFFFFF;
+  --color-bg-deep: #FFFFFF;
+  --color-text: #1A1A1A;
+  --color-text-muted: #6B6B6B;
+
+  --color-accent-bright: #A31515;
+  --color-success: #2E7D32;
+}
+
+/* ---------- Reset ---------- */
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  font-family: var(--font-body);
+  color: var(--color-text);
+  background: var(--color-bg);
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+img, svg { max-width: 100%; display: block; }
+a { color: inherit; text-decoration: none; }
+ul, ol { list-style: none; margin: 0; padding: 0; }
+h1, h2, h3, h4 {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  margin: 0 0 0.5em;
+}
+h1, h2 {
+  font-family: var(--font-display);
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.01em;
+}
+p { margin: 0 0 1em; }
+button { font: inherit; cursor: pointer; }
+.accent { color: var(--color-accent); }
+
+.skip-link {
+  position: absolute;
+  left: -999px;
+  top: 0;
+  background: var(--color-accent);
+  color: var(--color-bg);
+  padding: 10px 16px;
+  border-radius: 0 0 8px 0;
+  z-index: 1000;
+  font-weight: 700;
+  /* ≥18.66px + fet = "stor text" i WCAG:s mening, så accentens ~3.6:1
+     mot ljus bakgrund klarar AA:s 3:1-gräns istället för 4.5:1. */
+  font-size: 1.2rem;
+}
+.skip-link:focus { left: 0; }
+
+.container {
+  width: 100%;
+  max-width: var(--max-width);
+  margin-inline: auto;
+  padding-inline: 24px;
+}
+
+/* ---------- Buttons ---------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 48px;
+  padding: 12px 28px;
+  border-radius: var(--radius-sm);
+  font-family: var(--font-heading);
+  font-weight: 700;
+  /* 19.2px + fet = "stor text" i WCAG:s mening (gräns 18.66px), så
+     accentens ~3.5:1 (mot vår mörkaste bakgrund) klarar AA:s 3:1 istället
+     för de 4.5:1 som annars krävs för text i den här storleken. */
+  font-size: 1.2rem;
+  border: 2px solid transparent;
+  transition: background-color 0.15s ease, color 0.15s ease, transform 0.2s ease;
+  white-space: nowrap;
+}
+.btn:hover { transform: scale(1.04); }
+.btn:active { transform: scale(0.97); }
+
+.btn-primary {
+  background: var(--color-accent);
+  color: var(--color-bg);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.btn-primary:hover { background: var(--color-accent-bright); }
+
+.btn-hero {
+  width: 100%;
+  min-height: 60px;
+  padding: 18px 32px;
+  font-size: 1.3rem;
+  border-radius: var(--radius-sm);
+  white-space: normal;
+  text-align: center;
+}
+
+.btn-block { width: 100%; }
+
+/* ---------- Marquee (löpande banderoll ovanför headern) ---------- */
+.marquee {
+  overflow: hidden;
+  background: var(--color-bg-deep);
+  border-bottom: 1px solid var(--color-border);
+  padding-block: 8px;
+}
+/* Åtta identiska kopior (en riktig + sju aria-hidden) läggs sida vid
+   sida med samma gap-värde på både täcket och varje kopia, så
+   avståndet är exakt lika stort överallt – inom en kopia och mellan
+   kopior. En kopia är bara ~550px bred, så åtta behövs för att täcket
+   garanterat ska vara minst dubbelt så brett som även en bred
+   skrivbordsvy (~1920-2560px) – annars syns tomma glapp under loopen.
+   Loopen flyttar täcket exakt en åttondel (12,5 %) av sin egen bredd
+   = exakt en kopias bredd, för en sömlös övergång.
+
+   Hastigheten är i FASTA PIXLAR per sekund (en kopias bredd delat på
+   animation-duration), inte relativ till skärmens bredd. På en smal
+   mobilskärm hinner texten då korsa hela synliga ytan på en bråkdel av
+   tiden det tar på en bred desktop-vy, vilket upplevs som mycket
+   snabbare även om pixelhastigheten är identisk. Mobilt får därför en
+   längre (långsammare) duration som standard; brytpunkten för desktop
+   nedan (≥860px) växlar tillbaka till den piggare farten. */
+.marquee-track {
+  display: flex;
+  gap: 24px;
+  width: max-content;
+  animation: marquee-scroll 22s linear infinite;
+}
+/* Pausa på hover/fokus – både för musanvändare och tangentbordsnavigering. */
+.marquee:hover .marquee-track,
+.marquee:focus-within .marquee-track {
+  animation-play-state: paused;
+}
+.marquee-group {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  gap: 24px;
+}
+.marquee-group span {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-text);
+  white-space: nowrap;
+}
+.marquee-group .marquee-sep { color: var(--color-accent); }
+
+@keyframes marquee-scroll {
+  from { transform: translateX(0); }
+  to { transform: translateX(-12.5%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track { animation: none; }
+}
+
+/* ---------- Header ---------- */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 500;
+  background: var(--color-bg);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 72px;
+}
+
+.logo {
+  font-family: var(--font-heading);
+  font-weight: 800;
+  font-size: 1.2rem;
+  letter-spacing: -0.02em;
+  color: var(--color-text);
+}
+.logo span { color: var(--color-accent); }
+.logo small {
+  font-weight: 600;
+  font-size: 0.6em;
+  color: var(--color-text-muted);
+  margin-left: 2px;
+  vertical-align: super;
+}
+
+.header-cta { padding-inline: 10px; min-height: 44px; }
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  border: 1px solid var(--color-border);
+  background: transparent;
+  color: var(--color-text);
+  padding: 0;
+  transition: border-color 0.15s ease, color 0.15s ease;
+}
+.theme-toggle:hover { border-color: var(--color-accent); color: var(--color-accent); }
+.theme-toggle svg { width: 20px; height: 20px; display: block; }
+.theme-toggle .icon-moon { display: none; }
+[data-theme="light"] .theme-toggle .icon-sun { display: none; }
+[data-theme="light"] .theme-toggle .icon-moon { display: block; }
+
+/* ---------- Hero ---------- */
+.hero {
+  min-height: 80vh;
+  display: flex;
+  align-items: center;
+  padding: 96px 0 48px;
+  background: var(--color-bg);
+}
+.hero-inner {
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+}
+.eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--color-accent);
+  margin-bottom: 16px;
+  font-family: var(--font-heading);
+}
+.hero-text h1 {
+  font-size: clamp(2.75rem, 13vw, 5.5rem);
+  line-height: 0.98;
+}
+.hero-lead {
+  color: var(--color-text-muted);
+  font-size: 1.15rem;
+  max-width: 40ch;
+  margin-top: 20px;
+}
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 32px;
+}
+
+/* Den dekorativa illustrationen visas bara från desktop-brytpunkten –
+   på mobil ska rubriken/CTA:n äga utrymmet (70-80vh) utan konkurrens. */
+.hero-visual { display: none; }
+.strap-card {
+  width: 100%;
+  max-width: 320px;
+  background: var(--color-surface);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  border: 1px solid var(--color-border);
+}
+.strap-bg { fill: var(--color-bg-alt); }
+.strap-band { fill: none; stroke: var(--color-text); stroke-width: 10; stroke-linecap: round; }
+.strap-ring { fill: none; stroke: var(--color-accent); stroke-width: 6; }
+.strap-loop { fill: var(--color-accent); }
+
+/* ---------- Stat bar (snabb "bevis"-rad under hero) ---------- */
+.stat-bar {
+  background: var(--color-bg-deep);
+  padding: 28px 0;
+  position: relative;
+}
+.stat-bar-inner {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+.stat-bar-item {
+  text-align: center;
+  padding-inline: 4px;
+}
+.stat-bar-number {
+  display: block;
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(1.35rem, 6vw, 2.4rem);
+  color: var(--color-accent);
+  letter-spacing: 0.01em;
+}
+/* Jämnbreda siffror så räknar-animationen inte hoppar i bredd. */
+.count-up { font-variant-numeric: tabular-nums; }
+.stat-bar-label {
+  display: block;
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--color-text-muted);
+  margin-top: 4px;
+}
+
+/* ---------- Sectioner & avdelarlinjer ---------- */
+.section { padding: 64px 0; scroll-margin-top: 88px; position: relative; }
+.section-alt { background: var(--color-bg-alt); }
+
+/* Tunn röd gradientlinje mellan sektioner istället för hårda ramar. */
+.section::before,
+.stat-bar::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(var(--color-accent-rgb), 0.7), transparent);
+}
+
+.section-title {
+  font-size: clamp(2rem, 5.5vw, 3rem);
+  color: var(--color-text);
+}
+.section-lead {
+  color: var(--color-text-muted);
+  max-width: 60ch;
+  margin-bottom: 40px;
+  font-size: 1.05rem;
+}
+
+/* ---------- Product ---------- */
+.product-grid {
+  display: grid;
+  gap: 40px;
+}
+
+.product-image-frame {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  margin-bottom: 20px;
+  overflow: hidden;
+  transition: border-color 0.25s ease, transform 0.25s ease;
+}
+.product-image-frame:hover {
+  border-color: var(--color-accent);
+  transform: scale(1.02);
+}
+.product-illustration { transition: transform 0.3s ease; }
+.product-image-frame:hover .product-illustration { transform: scale(1.04); }
+
+.pi-bg { fill: var(--color-bg-alt); }
+.pi-strap { fill: none; stroke: var(--color-text-muted); stroke-width: 8; stroke-linecap: round; transition: stroke 0.2s ease; }
+.pi-ring { fill: none; stroke: var(--color-accent); stroke-width: 5; }
+.pi-handle { fill: var(--color-accent); transition: fill 0.2s ease; }
+
+/* Färgläge: när en färgcirkel väljs byter vi accentfärgen på illustrationen.
+   Byts illustrationen ut mot riktiga foton ersätts denna regel av att
+   JS:en sätter rätt bildfil på en <img>. */
+.product-image-frame[data-color="Röd"] .pi-strap,
+.product-image-frame[data-color="Röd"] .pi-handle { stroke: #E8542A; fill: #E8542A; }
+.product-image-frame[data-color="Blå"] .pi-strap,
+.product-image-frame[data-color="Blå"] .pi-handle { stroke: #3E6FD9; fill: #3E6FD9; }
+
+.color-swatches {
+  display: flex;
+  gap: 14px;
+  margin-bottom: 12px;
+}
+.swatch {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 2px solid var(--color-text-muted);
+  background-color: #2A2A2A;
+  padding: 0;
+  position: relative;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+.swatch[data-color="Röd"] { background-color: #E8542A; }
+.swatch[data-color="Blå"] { background-color: #3E6FD9; }
+.swatch.is-active {
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 2px var(--color-bg), 0 0 0 4px var(--color-accent);
+}
+
+.selected-color {
+  font-size: 0.9rem;
+  color: var(--color-text-muted);
+  margin-bottom: 0;
+}
+.selected-color strong { color: var(--color-text); }
+
+.product-details h3 { font-size: 1.6rem; }
+.product-details p { color: var(--color-text-muted); }
+
+.price-box {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin: 24px 0 28px;
+}
+.price-option {
+  flex: 1 1 160px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 16px 18px;
+  background: var(--color-surface);
+}
+.price-option-bundle { border-color: var(--color-accent); position: relative; }
+.price-badge {
+  display: inline-block;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--color-accent);
+  margin-bottom: 6px;
+}
+.price-amount {
+  display: block;
+  font-family: var(--font-heading);
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: var(--color-text);
+}
+.price-option-bundle .price-amount { color: var(--color-accent); }
+.price-label {
+  display: block;
+  font-size: 0.88rem;
+  color: var(--color-text-muted);
+}
+
+/* ---------- Hållbarhet ---------- */
+.sustain-grid {
+  display: grid;
+  gap: 32px;
+}
+.sustain-text p { color: var(--color-text-muted); }
+.sustain-text strong { color: var(--color-text); }
+
+.sustain-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  align-content: start;
+}
+.stat {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 20px 12px;
+  text-align: center;
+}
+.stat strong {
+  display: block;
+  font-family: var(--font-heading);
+  font-size: 1.4rem;
+  color: var(--color-accent);
+}
+.stat span {
+  display: block;
+  font-size: 0.78rem;
+  color: var(--color-text-muted);
+  margin-top: 4px;
+}
+
+/* ---------- Steps ---------- */
+.steps {
+  display: grid;
+  gap: 28px;
+  margin-bottom: 36px;
+}
+.steps li {
+  position: relative;
+  padding-left: 60px;
+}
+.step-number {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-accent);
+  color: var(--color-bg);
+  border-radius: 50%;
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 1.2rem;
+}
+.steps h3 { font-size: 1.1rem; margin-bottom: 4px; }
+.steps p { color: var(--color-text-muted); margin: 0; }
+.steps a { color: var(--color-accent); font-weight: 600; }
+
+.copy-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 12px;
+}
+.btn-copy {
+  display: inline-flex;
+  align-items: center;
+  min-height: 40px;
+  padding: 8px 18px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--color-border);
+  background: transparent;
+  color: var(--color-text);
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: 0.88rem;
+  transition: border-color 0.15s ease, color 0.15s ease;
+}
+.btn-copy:hover { border-color: var(--color-accent); color: var(--color-accent); }
+.copy-confirm {
+  font-size: 0.86rem;
+  font-weight: 600;
+  color: var(--color-success);
+  min-height: 1.2em;
+}
+
+/* ---------- Footer ---------- */
+.site-footer {
+  background: var(--color-bg-deep);
+  color: var(--color-text);
+  padding-top: 48px;
+  position: relative;
+}
+.site-footer::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(var(--color-accent-rgb), 0.7), transparent);
+}
+.footer-logo { color: var(--color-text); }
+.footer-logo small { color: var(--color-text-muted); }
+.footer-inner-simple {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: flex-start;
+  padding-bottom: 32px;
+}
+.footer-links {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+.footer-links a { color: var(--color-text); font-weight: 500; }
+.footer-links a:hover { color: var(--color-accent); }
+
+/* Understrykning som växer in vid hover, istället för en statisk linje. */
+.footer-links a,
+.steps a {
+  position: relative;
+  text-decoration: none;
+  background-image: linear-gradient(currentColor, currentColor);
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+  background-size: 0% 1px;
+  transition: background-size 0.25s ease, color 0.15s ease;
+}
+.footer-links a:hover,
+.steps a:hover {
+  background-size: 100% 1px;
+}
+@media (prefers-reduced-motion: reduce) {
+  .footer-links a,
+  .steps a {
+    transition: color 0.15s ease;
+  }
+}
+.footer-bottom {
+  border-top: 1px solid var(--color-border);
+  padding: 20px 24px;
+  font-size: 0.84rem;
+  text-align: center;
+}
+.footer-bottom p { margin: 0; color: var(--color-text-muted); }
+
+/* ---------- Flytande "Beställ nu" (syns efter att hero scrollats förbi) ---------- */
+.floating-cta {
+  position: fixed;
+  left: 16px;
+  bottom: 16px;
+  z-index: 400;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(10px);
+  transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s;
+}
+.floating-cta.is-visible {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+/* ---------- Scroll to top ---------- */
+.scroll-top {
+  position: fixed;
+  right: 16px;
+  bottom: 16px;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: none;
+  background: var(--color-accent);
+  color: var(--color-bg);
+  font-size: 1.2rem;
+  font-weight: 700;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(10px);
+  transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s, background-color 0.15s ease;
+  z-index: 400;
+}
+.scroll-top:hover { background: var(--color-accent-bright); }
+.scroll-top.is-visible {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+/* ---------- Reveal on scroll ---------- */
+.reveal {
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.35s ease, transform 0.35s ease;
+}
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  .floating-cta,
+  .floating-cta.is-visible {
+    transform: none;
+    transition: opacity 0.15s ease, visibility 0.15s;
+  }
+}
+
+/* =========================================================
+   Breakpoints – mobile-first (min-width upward)
+   ========================================================= */
+
+/* Tablet ≥ 640px */
+@media (min-width: 640px) {
+  .btn-hero { width: auto; }
+}
+
+/* Desktop ≥ 860px */
+@media (min-width: 860px) {
+  /* Snabbare (kortare duration = fler px/s) än mobilens standard –
+     motiverat ovan vid .marquee-track. */
+  .marquee-track { animation-duration: 11s; }
+
+  .hero { min-height: 640px; padding: 72px 0; }
+  .hero-inner {
+    flex-direction: row;
+    align-items: center;
+  }
+  .hero-text { flex: 1 1 55%; }
+  .hero-visual { display: flex; justify-content: center; flex: 1 1 45%; }
+
+  .stat-bar-inner { gap: 24px; }
+
+  .product-grid { grid-template-columns: 1fr 1fr; align-items: start; }
+
+  .sustain-grid { grid-template-columns: 1.4fr 1fr; align-items: start; }
+  .sustain-stats { grid-template-columns: 1fr; }
+
+  .steps { grid-template-columns: repeat(3, 1fr); }
+
+  .footer-inner-simple {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+}
+
+/* Large desktop ≥ 1120px */
+@media (min-width: 1120px) {
+  .section { padding: 96px 0; }
+}
