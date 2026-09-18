@@ -6,21 +6,20 @@
   <title>GripForce UF – Gym Straps med D-Handle</title>
   <meta name="description" content="Gym Straps med D-Handle från GripForce UF. Gjorda av återvunnet Econyl®-material, testade till 240 kg. Beställ via Instagram och Swish.">
 
-  <!-- Sätter sparat/föredraget tema innan sidan målas upp, så det aldrig
-       blinkar till fel tema (FOUC). Måste köras synkront här i <head> –
-       CSS:ens standard (inget data-theme) är redan mörkt tema, så vi
-       behöver bara agera när resultatet blir ljust. -->
-  <script>
-    (function () {
-      try {
-        var saved = localStorage.getItem("theme");
-        var wantsLight = saved
-          ? saved === "light"
-          : window.matchMedia("(prefers-color-scheme: light)").matches;
-        if (wantsLight) document.documentElement.setAttribute("data-theme", "light");
-      } catch (e) {}
-    })();
-  </script>
+  <!-- Säkerhet: se _headers för de headers GitHub Pages inte tillåter oss
+       att sätta (X-Frame-Options, Strict-Transport-Security, X-Content-
+       Type-Options, Permissions-Policy, och CSP:ns frame-ancestors – den
+       sistnämnda ignoreras av webbläsare när CSP levereras via <meta>,
+       den kräver en riktig HTTP-header). Lägger du till en ny extern
+       resurs (typsnitt, analytics, ...) måste den läggas till i denna
+       policy också, annars blockeras den tyst av webbläsaren. -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+
+  <!-- Sätter sparat/föredraget tema innan sidan målas upp (FOUC) och ett
+       enkelt clickjacking-skydd. Extern fil, inte en inline <script> –
+       CSP:n ovan saknar medvetet 'unsafe-inline' i script-src. -->
+  <script src="theme-init.js"></script>
 
   <!-- Favicon: enkel platshållare, se favicon.svg – byt ut mot riktig logotyp -->
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
@@ -47,7 +46,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;700&family=Poppins:wght@600;700;800&display=swap">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;700&family=Poppins:wght@600;700;800&display=swap" media="print" onload="this.media='all'">
+  <link id="fontStylesheet" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;700&family=Poppins:wght@600;700;800&display=swap" media="print">
   <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;700&family=Poppins:wght@600;700;800&display=swap"></noscript>
 
   <link rel="stylesheet" href="style.css">

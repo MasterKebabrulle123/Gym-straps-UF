@@ -4,6 +4,24 @@
 (function () {
   "use strict";
 
+  // Körs direkt (inte i DOMContentLoaded) eftersom typsnittsarket kan
+  // hinna laddas klart innan dess. Ersätter det tidigare
+  // onload="this.media='all'"-attributet – en strikt CSP utan
+  // 'unsafe-inline' i script-src tillåter inga inline-händelsehanterare.
+  initFontSwap();
+
+  function initFontSwap() {
+    var link = document.getElementById("fontStylesheet");
+    if (!link || link.media === "all") return;
+
+    link.addEventListener("load", function () {
+      link.media = "all";
+    });
+
+    // Redan klar innan lyssnaren hanns kopplas på (snabb cache-träff m.m.).
+    if (link.sheet) link.media = "all";
+  }
+
   document.addEventListener("DOMContentLoaded", function () {
     initThemeToggle();
     initSmoothScroll();
@@ -126,12 +144,13 @@
       );
     }
 
-    // Fallback för äldre webbläsare / icke-säkra kontexter.
+    // Fallback för äldre webbläsare / icke-säkra kontexter. CSS-klass
+    // istället för element.style.* – vår CSP tillåter inga JS-satta
+    // inline-stilar (style-src saknar 'unsafe-inline').
     try {
       var textarea = document.createElement("textarea");
       textarea.value = text;
-      textarea.style.position = "fixed";
-      textarea.style.opacity = "0";
+      textarea.className = "clipboard-fallback-input";
       document.body.appendChild(textarea);
       textarea.focus();
       textarea.select();

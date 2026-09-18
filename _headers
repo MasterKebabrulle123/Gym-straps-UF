@@ -1,0 +1,15 @@
+# Läses av Netlify (ignoreras av GitHub Pages, som inte stödjer egna
+# HTTP-headers – där gäller bara det som går att sätta via <meta> i
+# index.html, plus JS-fallbacket i theme-init.js för clickjacking).
+#
+# Lägger du till en ny extern resurs (typsnitt, analytics, ...): uppdatera
+# Content-Security-Policy nedan OCH motsvarande <meta http-equiv> i
+# index.html, annars blockeras resursen tyst i den ena miljön.
+
+/*
+  Content-Security-Policy: default-src 'none'; script-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests
+  X-Frame-Options: DENY
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: geolocation=(), microphone=(), camera=(), payment=(), usb=(), interest-cohort=()
+  Strict-Transport-Security: max-age=63072000; includeSubDomains; preload

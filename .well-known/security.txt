@@ -1,0 +1,4 @@
+# Enligt RFC 9116 – https://securitytxt.org
+Contact: mailto:info@gripforceuf.se
+Expires: 2027-09-18T00:00:00.000Z
+Preferred-Languages: sv, en

@@ -3,6 +3,19 @@
    Djärv, mörk DTC-athletic-estetik. Ingen ramverk.
    ========================================================= */
 
+/* Döljer sidan om den upptäcks vara inramad (clickjacking-fallback,
+   se theme-init.js) samt kopieringsfältet för äldre webbläsare utan
+   Clipboard-API (se initCopySwishNumber i script.js). Klasser istället
+   för JS-satta element.style.* – vår CSP tillåter inga inline-stilar. */
+.js-framed-hidden { display: none !important; }
+.clipboard-fallback-input {
+  position: fixed;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  pointer-events: none;
+}
+
 :root {
   /* Mörkt tema (standard). --color-bg-deep är den "renaste" tonen i temat
      (helsvart här) – används för stat-bar/footer som ett extra djup-lager
